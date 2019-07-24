@@ -49,6 +49,27 @@ class common{
     }
 
     /***
+     * 支付成功，删除占用
+     * @param $sku
+     * @param $index
+     */
+    static public function  deleteUse($sku,$index){
+        $redis = self::getRedis();
+        if(!$redis->exists('seckill_free_num_'.$sku)&&!$redis->exists('seckill_use_num_'.$sku)){
+            return array('result' => false, 'message' => '抢购信息:该商品没有参与秒杀');
+        }
+        //取出要归还位置的用户
+        $use_value=$redis->lGet('seckill_use_num_'.$sku,$index);
+        if(!empty($use_value)){
+            //删除占用位置
+            $redis->lRem('seckill_use_num_'.$sku,$use_value,1);
+            return array('result' => true, 'message' => '剔除成功','data'=>$index);
+        }else{
+            return array('result' => false, 'message' => '不存在索引','data'=>$index);
+        }
+    }
+
+    /***
      * 归还空闲抢购(当未支付并且超时支付)
      * @param $sku
      * @param $index
