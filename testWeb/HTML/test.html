@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        $.ajax({
+            type: "GET", //必须用post
+            dataType: "json",
+            url: "http://100.2.2.223/phpTest/testWeb/seckill/user_manager.php?sku=1&userid=1",
+            //不能用success，否则不执行
+            success: function(data) {
+                //var data = eval(data.responseText);
+                console.log(data);
+            },
+        });
+        $.ajax({
+            type: "GET", //必须用post
+            dataType: "json",
+            url: "http://100.2.2.223/phpTest/testWeb/seckill/user_manager.php?sku=1&userid=2",
+            //不能用success，否则不执行
+            success: function(data) {
+                //var data = eval(data.responseText);
+                console.log(data);
+            },
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
